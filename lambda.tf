@@ -12,6 +12,11 @@ resource "aws_lambda_function" "aft_alternate_contacts_extract_lambda" {
   timeout          = 30
 }
 
+resource "aws_cloudwatch_log_group" "aft_alternate_contacts_extract_lambda_log" {
+  name              = "/aws/lambda/${aws_lambda_function.aft_alternate_contacts_extract_lambda.function_name}"
+  retention_in_days = var.cloudwatch_log_group_retention
+}
+
 resource "aws_lambda_function" "aft_alternate_contacts_add_lambda" {
   filename         = data.archive_file.aft_alternate_contacts_add.output_path
   function_name    = "aft-alternate-contacts-add"
@@ -23,6 +28,11 @@ resource "aws_lambda_function" "aft_alternate_contacts_add_lambda" {
   timeout          = 30
 }
 
+resource "aws_cloudwatch_log_group" "aft_alternate_contacts_add_lambda_log" {
+  name              = "/aws/lambda/${aws_lambda_function.aft_alternate_contacts_add_lambda.function_name}"
+  retention_in_days = var.cloudwatch_log_group_retention
+}
+
 resource "aws_lambda_function" "aft_alternate_contacts_validate_lambda" {
   filename         = data.archive_file.aft_alternate_contacts_validate.output_path
   function_name    = "aft-alternate-contacts-validate"
@@ -32,4 +42,9 @@ resource "aws_lambda_function" "aft_alternate_contacts_validate_lambda" {
   source_code_hash = data.archive_file.aft_alternate_contacts_validate.output_base64sha256
   runtime          = "python3.9"
   timeout          = 30
+}
+
+resource "aws_cloudwatch_log_group" "aft_alternate_contacts_validate_lambda_log" {
+  name              = "/aws/lambda/${aws_lambda_function.aft_alternate_contacts_validate_lambda.function_name}"
+  retention_in_days = var.cloudwatch_log_group_retention
 }
