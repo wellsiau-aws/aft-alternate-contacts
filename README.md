@@ -4,6 +4,45 @@
 ## Description
 This Terraform module implements state machine to update AWS account alternate contacts based on `custom_fields` parameter from `aft-account-requests` module. For implementation guidance, refer to the [AWS Control Tower workshop for AFT](https://controltower.aws-management.tools/automation/aft_custom).
 
+### Sample usage
+Sample of `custom_fields` implementation for `aft-alternate-contacts`:
+```
+module "vending_account_1" {
+  source = "./modules/aft-account-request"
+  ...
+  custom_fields = {
+    alternate_contact = jsonencode(
+      {
+        "billing"= {
+          "email-address" = "billing@mycompany.com",
+          "name"          = "Account Receiveable",
+          "phone-number"  = "+11234567890",
+          "title"         = "Billing Department"
+        },
+        "operations"= {
+          "email-address" = "ops@mycompany.com",
+          "name"          = "Operations 24/7",
+          "phone-number"  = "+11234567890",
+          "title"         = "DevOps Team"
+        },
+        "security"= {
+          "email-address" = "soc@mycompany.com",
+          "name"          = "Security Ops Center",
+          "phone-number"  = "+11234567890",
+          "title"         = "SOC Team"
+        }
+      }
+    )
+    another_custom_field1 = "a"
+    another_custom_field1 = "b"
+  }
+  ...
+}
+```
+
+### Overview
+
+Diagram below depicts the invocation of `aft-alternate-contacts` as part of `aft-account-provisioning-customizations`. 
 ![alternate contact state machine overview](images/aft-alternate-contacts-overview.png)
 
 The **aft-alternate-contacts** state machine consist of three separate Lambda functions that extracts the custom fields, validate the contacts information using regex and then updates the alternate contact in the target account. 
