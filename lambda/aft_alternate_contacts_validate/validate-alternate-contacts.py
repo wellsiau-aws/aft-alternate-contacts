@@ -35,7 +35,7 @@ def lambda_handler(event, context):
       logger.debug(json.dumps(event))
       payload = event
       action = event["action"]
-      logger.info("{} - {}".format(action, payload))
+      logger.debug("{} - {}".format(action, payload))
 
       if action == "validate":
           request_validated = validate_request(payload)

@@ -32,7 +32,7 @@ def lookup_aft_request_metadata(ct_parameters):
       IndexName=AFT_REQUEST_METADATA_EMAIL_INDEX,
       KeyConditionExpression=Key("email").eq(account_email))
     account_id = query_response["Items"][0]["id"]
-    logger.info("Found account id {} for account {}".format(account_id, account_email))
+    logger.info("Account id found")
     
     return account_id
     
@@ -44,7 +44,7 @@ def update_alternate_contact(account_id, contact_payload):
   try:
     account_client = session.client("account")
     for contact_type, contact_detail in contact_payload.items():
-      logger.info("Add alternate contact {} as follow {}".format(contact_type, contact_detail))
+      logger.info("Add alternate contact {}".format(contact_type))
       account_response = account_client.put_alternate_contact(
           AccountId=account_id,
           AlternateContactType=str(contact_type).upper(),
@@ -66,7 +66,7 @@ def lambda_handler(event, context):
       payload = event["payload"]
       action = event["action"]
       ct_parameters = payload["control_tower_parameters"]
-      logger.info("{} - {}".format(action, payload))
+      logger.debug("{} - {}".format(action, payload))
 
       if action == "add":
           logger.info("Look up metadata table from {}".format(SSM_AFT_REQUEST_METADATA_PATH))

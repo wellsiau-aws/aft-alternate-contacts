@@ -25,7 +25,7 @@ def lambda_handler(event, context):
       payload = event["payload"]
       action = event["action"]
       ct_parameters = payload["account_request"]["control_tower_parameters"]
-      logger.info("{} - {}".format(action, payload))
+      logger.debug("{} - {}".format(action, payload))
 
       if action == "extract":
           extracted_data = extract_custom_fields(payload)
