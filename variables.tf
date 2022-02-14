@@ -18,6 +18,7 @@ variable "aws_ct_mgt_org_id" {
 }
 
 variable "cloudwatch_log_group_retention" {
+  description = "Lambda CloudWatch log group retention period"
   type            = string
   default         = "0"
   validation {
