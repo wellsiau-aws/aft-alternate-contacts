@@ -1,4 +1,5 @@
 # Update Alternate Contacts
+
 output "aft_alternate_contacts_state_machine_arn" {
   description = "State machine ARN"
   value = aws_sfn_state_machine.aft_alternate_contacts_state.arn

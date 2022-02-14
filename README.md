@@ -1,7 +1,22 @@
 <!-- BEGIN_TF_DOCS -->
+# aft-alternate-contacts
+
+## Description
+This Terraform module implements state machine to update AWS account alternate contacts based on `custom_fields` parameter from `aft-account-requests` module. For implementation guidance, refer to the [AWS Control Tower workshop for AFT](https://controltower.aws-management.tools/automation/aft_custom).
+
+![alternate contact state machine overview](images/aft-alternate-contacts-overview.png)
+
+The **aft-alternate-contacts** state machine consist of three separate Lambda functions that extracts the custom fields, validate the contacts information using regex and then updates the alternate contact in the target account. 
+![alternate contact state machine workflow](images/aft-alternate-contacts-state-machine.png)
+
 ## Requirements
 
-No requirements.
+This module requires [Account Factory for Terraform (AFT)](https://github.com/aws-ia/terraform-aws-control_tower_account_factory) and must be deployed as part of account provisioning customization. 
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.15 |
 
 ## Providers
 
@@ -9,10 +24,6 @@ No requirements.
 |------|---------|
 | <a name="provider_archive"></a> [archive](#provider\_archive) | n/a |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-
-## Modules
-
-No modules.
 
 ## Resources
 
